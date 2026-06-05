@@ -11,15 +11,53 @@ KST       = timezone(timedelta(hours=9))
 COMPETITION_CODE = "WC"
 KOREA_TEAM_ID = 732
 
+# ── 백업 데이터 (API 미응답시 사용) ──────────────────
+FALLBACK_MATCHES = [
+    {
+        "home": "Korea Republic", "away": "Costa Rica",
+        "home_flag": "🇰🇷", "away_flag": "🇨🇷",
+        "status": "SCHEDULED",
+        "score_h": "-", "score_a": "-",
+        "date_kst": "6/16 04:00", "date_iso": "2026-06-16T04:00:00+09:00",
+        "is_korea": True, "matchday": 1,
+    },
+    {
+        "home": "Korea Republic", "away": "Mexico",
+        "home_flag": "🇰🇷", "away_flag": "🇲🇽",
+        "status": "SCHEDULED",
+        "score_h": "-", "score_a": "-",
+        "date_kst": "6/21 04:00", "date_iso": "2026-06-21T04:00:00+09:00",
+        "is_korea": True, "matchday": 2,
+    },
+    {
+        "home": "Germany", "away": "Korea Republic",
+        "home_flag": "🇩🇪", "away_flag": "🇰🇷",
+        "status": "SCHEDULED",
+        "score_h": "-", "score_a": "-",
+        "date_kst": "6/25 07:00", "date_iso": "2026-06-25T07:00:00+09:00",
+        "is_korea": True, "matchday": 3,
+    },
+]
+
+FALLBACK_STANDINGS = [
+    {"position":1,"name":"Germany","flag":"🇩🇪","played":0,"won":0,"draw":0,"lost":0,"gd":0,"points":0,"is_korea":False},
+    {"position":2,"name":"Korea Republic","flag":"🇰🇷","played":0,"won":0,"draw":0,"lost":0,"gd":0,"points":0,"is_korea":True},
+    {"position":3,"name":"Mexico","flag":"🇲🇽","played":0,"won":0,"draw":0,"lost":0,"gd":0,"points":0,"is_korea":False},
+    {"position":4,"name":"Costa Rica","flag":"🇨🇷","played":0,"won":0,"draw":0,"lost":0,"gd":0,"points":0,"is_korea":False},
+]
+
+# ── API 호출 ──────────────────────────────────────────
 def fetch_korea_matches():
     url = f"{BASE_URL}/teams/{KOREA_TEAM_ID}/matches"
     params = {"competitions": COMPETITION_CODE, "status": "SCHEDULED,IN_PLAY,PAUSED,FINISHED"}
     try:
         r = requests.get(url, headers=HEADERS, params=params, timeout=10)
         r.raise_for_status()
-        return r.json().get("matches", [])
+        data = r.json().get("matches", [])
+        print(f"  API 경기 데이터: {len(data)}개")
+        return data
     except Exception as e:
-        print(f"[경고] 한국 경기 API 실패: {e}")
+        print(f"  [경고] 경기 API 실패: {e} → 백업 데이터 사용")
         return []
 
 def fetch_group_standings():
@@ -33,12 +71,14 @@ def fetch_group_standings():
                 for group in s.get("groups", []):
                     teams = [t["team"]["name"] for t in group.get("table", [])]
                     if "Korea Republic" in teams or "South Korea" in teams:
+                        print(f"  API 순위표: {len(group.get('table',[]))}팀")
                         return group.get("table", [])
         return []
     except Exception as e:
-        print(f"[경고] 순위표 API 실패: {e}")
+        print(f"  [경고] 순위표 API 실패: {e} → 백업 데이터 사용")
         return []
 
+# ── 데이터 가공 ───────────────────────────────────────
 FLAG_MAP = {
     "Korea Republic": "🇰🇷", "South Korea": "🇰🇷",
     "Germany": "🇩🇪", "Mexico": "🇲🇽", "Costa Rica": "🇨🇷",
@@ -116,15 +156,31 @@ def last_korea_match(matches):
     finished = [m for m in matches if m["is_korea"] and m["status"] == "FINISHED"]
     return finished[-1] if finished else None
 
+# ── 메인 ─────────────────────────────────────────────
 if __name__ == "__main__":
     print("▶ 데이터 수집 시작...")
+
     raw_matches   = fetch_korea_matches()
     raw_standings = fetch_group_standings()
-    matches   = process_matches(raw_matches)
-    standings = process_standings(raw_standings)
-    next_m    = next_korea_match(matches)
-    last_m    = last_korea_match(matches)
-    updated   = datetime.now(KST).strftime("%Y-%m-%d %H:%M KST")
+
+    # API 데이터 있으면 사용, 없으면 백업 사용
+    if raw_matches:
+        matches = process_matches(raw_matches)
+        print("  ✅ API 경기 데이터 사용")
+    else:
+        matches = FALLBACK_MATCHES
+        print("  ⚠️ 백업 경기 데이터 사용")
+
+    if raw_standings:
+        standings = process_standings(raw_standings)
+        print("  ✅ API 순위표 사용")
+    else:
+        standings = FALLBACK_STANDINGS
+        print("  ⚠️ 백업 순위표 사용")
+
+    next_m  = next_korea_match(matches)
+    last_m  = last_korea_match(matches)
+    updated = datetime.now(KST).strftime("%Y-%m-%d %H:%M KST")
 
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump({"matches": matches, "standings": standings,
