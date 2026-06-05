@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>2026 월드컵 한국 경기 올인원 | 일정·결과·중계</title>
+<meta name="description" content="2026 북중미 월드컵 한국 경기 일정, 실시간 결과, 중계 링크를 한 곳에서 확인하세요.">
+<style>
+  :root {
+    --red: #c0392b; --red-dark: #96281b; --red-light: #fadbd8;
+    --navy: #1a252f; --navy2: #2c3e50; --gold: #f39c12; --gold-light: #fef9e7;
+    --bg: #f5f6fa; --white: #fff; --gray: #7f8c8d; --gray-light: #ecf0f1;
+    --text: #2c3e50; --border: #dfe6e9; --live: #27ae60;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  a, button { -webkit-tap-highlight-color: transparent; }
+  .btn-small, .btn-bc, .btn-watch, .btn-watch-sub {
+    min-height: 44px; display: flex; align-items: center; justify-content: center;
+  }
+  body {
+    font-family: 'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif;
+    background: var(--bg); color: var(--text);
+    max-width: 480px; margin: 0 auto; min-height: 100vh;
+  }
+  .site-header { background: var(--navy); padding: 0 16px; position: sticky; top: 0; z-index: 100; border-bottom: 3px solid var(--red); }
+  .header-top { display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  .logo { color: #fff; font-size: 15px; font-weight: 900; letter-spacing: -0.5px; }
+  .logo span { color: var(--gold); }
+  .live-badge { background: var(--live); color: #fff; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 20px; animation: blink 1.2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  .tab-bar { display: flex; background: var(--navy2); overflow-x: auto; scrollbar-width: none; }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn { flex: 0 0 auto; padding: 13px 16px; min-height: 44px; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 700; border: none; background: none; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+  .tab-btn.active { color: #fff; border-bottom-color: var(--gold); }
+  .tab-section { display: none; padding: 16px; }
+  .tab-section.active { display: block; }
+  .ad-slot { background: var(--white); border: 1px dashed var(--border); border-radius: 10px; height: 90px; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 11px; margin-bottom: 16px; overflow: hidden; }
+  .next-hero { background: var(--navy); border-radius: 14px; padding: 20px 16px; margin-bottom: 16px; position: relative; overflow: hidden; }
+  .next-hero::before { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(192,57,43,0.15); border-radius: 50%; }
+  .next-label { font-size: 10px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .match-teams { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .team-block { text-align: center; flex: 1; }
+  .team-flag { font-size: 36px; line-height: 1; margin-bottom: 6px; }
+  .team-name { color: #fff; font-size: 13px; font-weight: 700; }
+  .vs-block { color: rgba(255,255,255,0.4); font-size: 18px; font-weight: 900; }
+  .match-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .meta-chip { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+  .meta-chip.red { background: var(--red); color: #fff; }
+  .btn-watch { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 13px; background: var(--red); color: #fff; border-radius: 10px; font-size: 14px; font-weight: 800; text-decoration: none; transition: background 0.2s; border: none; cursor: pointer; min-height: 44px; }
+  .btn-watch:hover { background: var(--red-dark); }
+  .btn-watch-sub { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 11px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border-radius: 10px; font-size: 13px; font-weight: 700; text-decoration: none; margin-top: 8px; border: none; cursor: pointer; min-height: 44px; }
+  .countdown-wrap { background: var(--white); border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); text-align: center; }
+  .countdown-title { font-size: 12px; color: var(--gray); font-weight: 600; margin-bottom: 12px; }
+  .countdown-boxes { display: flex; justify-content: center; gap: 8px; }
+  .cd-box { background: var(--navy); border-radius: 10px; padding: 10px 14px; min-width: 58px; }
+  .cd-num { color: #fff; font-size: 22px; font-weight: 900; line-height: 1; }
+  .cd-label { color: rgba(255,255,255,0.5); font-size: 10px; font-weight: 700; margin-top: 4px; }
+  .section-title { font-size: 13px; font-weight: 800; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .match-card { background: var(--white); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid var(--border); transition: box-shadow 0.2s; }
+  .match-card.korea { border-left: 4px solid var(--red); }
+  .match-card.finished { opacity: 0.85; }
+  .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .card-group { font-size: 10px; font-weight: 800; color: var(--gray); text-transform: uppercase; }
+  .card-status { font-size: 10px; font-weight: 800; padding: 3px 9px; border-radius: 20px; }
+  .status-upcoming { background: var(--gold-light); color: var(--gold); }
+  .status-live { background: #d5f5e3; color: var(--live); animation: blink 1.2s infinite; }
+  .status-done { background: var(--gray-light); color: var(--gray); }
+  .card-teams { display: flex; align-items: center; justify-content: space-between; }
+  .c-team { display: flex; align-items: center; gap: 8px; flex: 1; }
+  .c-team.right { flex-direction: row-reverse; }
+  .c-flag { font-size: 22px; }
+  .c-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .c-name.highlight { color: var(--red); }
+  .c-score-wrap { display: flex; align-items: center; gap: 6px; flex-direction: column; }
+  .c-score { font-size: 20px; font-weight: 900; color: var(--navy); min-width: 44px; text-align: center; }
+  .c-date { font-size: 10px; color: var(--gray); font-weight: 600; }
+  .card-bottom { display: flex; gap: 6px; margin-top: 12px; }
+  .btn-small { flex: 1; padding: 10px 8px; min-height: 44px; border-radius: 8px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; border: none; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-gray { background: var(--gray-light); color: var(--text); }
+  .group-card { background: var(--white); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; overflow: hidden; }
+  .group-head { background: var(--navy); padding: 10px 16px; font-size: 13px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+  .group-head .group-letter { background: var(--red); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; }
+  table.group-table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
+  table.group-table th { background: var(--gray-light); padding: 7px 4px; color: var(--gray); font-weight: 700; text-align: center; white-space: nowrap; }
+  table.group-table th:first-child { text-align: left; padding-left: 10px; width: 22px; }
+  table.group-table th:nth-child(2) { text-align: left; }
+  table.group-table th:nth-child(n+3) { width: 30px; }
+  table.group-table td { padding: 10px 4px; text-align: center; border-top: 1px solid var(--border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  table.group-table td:first-child { text-align: left; padding-left: 10px; }
+  table.group-table td:nth-child(2) { text-align: left; }
+  table.group-table tr.korea-row td { background: #fef9f9; font-weight: 700; }
+  table.group-table tr.korea-row td:first-child { color: var(--red); }
+  .advance-dot, .elim-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .advance-dot { background: var(--live); }
+  .elim-dot { background: var(--gray); }
+  .legend { display: flex; gap: 12px; padding: 10px 16px; font-size: 11px; color: var(--gray); }
+  .broadcast-card { background: var(--white); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 12px; overflow: hidden; }
+  .bc-head { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+  .bc-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .bc-name { font-size: 14px; font-weight: 800; }
+  .bc-sub { font-size: 11px; color: var(--gray); margin-top: 1px; }
+  .bc-body { padding: 12px 16px; }
+  .bc-body p { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
+  .btn-bc { display: block; width: 100%; padding: 11px; min-height: 44px; border-radius: 8px; font-size: 13px; font-weight: 800; text-align: center; text-decoration: none; transition: 0.2s; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .btn-bc.red { background: var(--red); color: #fff; }
+  .btn-bc.navy { background: var(--navy); color: #fff; }
+  .bookmark-banner { background: linear-gradient(135deg, var(--navy) 0%, #2980b9 100%); border-radius: 14px; padding: 18px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .bk-text strong { color: #fff; font-size: 14px; display: block; margin-bottom: 3px; }
+  .bk-text span { color: rgba(255,255,255,0.65); font-size: 12px; line-height: 1.4; display: block; }
+  .bk-btn { background: var(--gold); color: var(--navy); font-size: 11px; font-weight: 800; padding: 8px 12px; border-radius: 8px; border: none; cursor: pointer; flex-shrink: 0; white-space: nowrap; min-height: 44px; }
+  .scroll-top { position: fixed; bottom: 20px; right: 16px; width: 44px; height: 44px; background: var(--navy); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border: none; z-index: 99; }
+  .player-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; align-items: start; }
+  .player-card { background: var(--white); border-radius: 12px; border: 1px solid var(--border); padding: 14px 12px; text-align: center; display: flex; flex-direction: column; align-items: center; min-height: 110px; }
+  .player-card .rank { font-size: 10px; font-weight: 800; color: var(--gold); margin-bottom: 4px; }
+  .player-card .flag { font-size: 22px; margin-bottom: 4px; }
+  .player-card .pname { font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+  .player-card .pvalue { font-size: 12px; color: var(--gray); }
+  .player-card .pvalue b { color: var(--red); font-size: 14px; }
+  .player-card.top1 { border: 2px solid var(--gold); }
+  .updated-info { font-size: 10px; color: var(--gray); text-align: right; padding: 4px 0 8px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <div class="logo">⚽ 한국 <span>월드컵</span> 올인원</div>
+    <span class="live-badge">LIVE 2026</span>
+  </div>
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('home',this)">🏠 홈</button>
+    <button class="tab-btn" onclick="showTab('schedule',this)">📅 일정·결과</button>
+    <button class="tab-btn" onclick="showTab('group',this)">🏆 조별순위</button>
+    <button class="tab-btn" onclick="showTab('watch',this)">📺 중계보기</button>
+    <button class="tab-btn" onclick="showTab('players',this)">⭐ 선수</button>
+  </nav>
+</header>
+
+<!-- ══════════ HOME ══════════ -->
+<section id="tab-home" class="tab-section active">
+  <div class="updated-info">🔄 마지막 업데이트: {{ updated_at }}</div>
+  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+
+  <div class="bookmark-banner">
+    <div style="font-size:30px;flex-shrink:0;">🔖</div>
+    <div class="bk-text">
+      <strong>매일 경기결과 여기서 확인!</strong>
+      <span>즐겨찾기 추가하고 빠르게 접속하세요</span>
+    </div>
+    <button class="bk-btn" onclick="alert('주소창의 ☆ 버튼을 눌러 즐겨찾기 추가하세요!')">저장</button>
+  </div>
+
+  <!-- 다음 한국 경기 -->
+  {% if next_match %}
+  <div class="next-hero">
+    <div class="next-label">🇰🇷 다음 한국 경기</div>
+    <div class="match-teams">
+      <div class="team-block">
+        <div class="team-flag">{{ next_match.home_flag }}</div>
+        <div class="team-name">{{ next_match.home }}</div>
+      </div>
+      <div class="vs-block">VS</div>
+      <div class="team-block">
+        <div class="team-flag">{{ next_match.away_flag }}</div>
+        <div class="team-name">{{ next_match.away }}</div>
+      </div>
+    </div>
+    <div class="match-meta">
+      <span class="meta-chip red">{{ next_match.matchday }}차전</span>
+      <span class="meta-chip">{{ next_match.date_kst }} KST</span>
+    </div>
+    <a href="https://sports.naver.com" class="btn-watch" target="_blank">📺 실시간 중계 바로보기</a>
+    <a href="https://sports.naver.com" class="btn-watch-sub" target="_blank">📱 네이버 스포츠 중계 링크</a>
+  </div>
+  <!-- 카운트다운 -->
+  <div class="countdown-wrap">
+    <div class="countdown-title">🇰🇷 다음 경기 시작까지</div>
+    <div class="countdown-boxes">
+      <div class="cd-box"><div class="cd-num" id="cd-d">--</div><div class="cd-label">일</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-h">--</div><div class="cd-label">시간</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-m">--</div><div class="cd-label">분</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-s">--</div><div class="cd-label">초</div></div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- 직전 경기 결과 -->
+  {% if last_match %}
+  <div class="section-title">최근 경기 결과</div>
+  <div class="match-card korea finished">
+    <div class="card-top">
+      <span class="card-group">{{ last_match.matchday }}차전</span>
+      <span class="card-status status-done">종료</span>
+    </div>
+    <div class="card-teams">
+      <div class="c-team"><span class="c-flag">{{ last_match.home_flag }}</span><span class="c-name {% if 'Korea' in last_match.home %}highlight{% endif %}">{{ last_match.home }}</span></div>
+      <div class="c-score-wrap">
+        <div class="c-score">{{ last_match.score_h }} : {{ last_match.score_a }}</div>
+        <div class="c-date">{{ last_match.date_kst }}</div>
+      </div>
+      <div class="c-team right"><span class="c-flag">{{ last_match.away_flag }}</span><span class="c-name {% if 'Korea' in last_match.away %}highlight{% endif %}">{{ last_match.away }}</span></div>
+    </div>
+    <div class="card-bottom">
+      <a href="https://sports.naver.com" class="btn-small btn-red" target="_blank">하이라이트 보기</a>
+      <a href="https://sports.naver.com" class="btn-small btn-gray" target="_blank">경기 분석</a>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="ad-slot" style="height:280px;"><!-- 애드센스 300x250 --></div>
+
+  <div class="section-title">빠른 바로가기</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+    <button onclick="showTab('schedule',null)" style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:700;min-height:80px;">📅<br><span style="font-size:11px;color:var(--gray);display:block;margin-top:4px;">전체 일정</span></button>
+    <button onclick="showTab('group',null)" style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:700;min-height:80px;">🏆<br><span style="font-size:11px;color:var(--gray);display:block;margin-top:4px;">E조 순위</span></button>
+    <button onclick="showTab('watch',null)" style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:700;min-height:80px;">📺<br><span style="font-size:11px;color:var(--gray);display:block;margin-top:4px;">중계보기</span></button>
+    <button onclick="showTab('players',null)" style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;cursor:pointer;font-size:13px;font-weight:700;min-height:80px;">⭐<br><span style="font-size:11px;color:var(--gray);display:block;margin-top:4px;">선수 정보</span></button>
+  </div>
+</section>
+
+<!-- ══════════ SCHEDULE ══════════ -->
+<section id="tab-schedule" class="tab-section">
+  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="section-title">🇰🇷 한국 전체 일정</div>
+
+  {% for m in matches %}
+  {% if m.is_korea %}
+  <div class="match-card korea {% if m.status == 'FINISHED' %}finished{% endif %}">
+    <div class="card-top">
+      <span class="card-group">{{ m.matchday }}차전</span>
+      <span class="card-status
+        {% if m.status == 'FINISHED' %}status-done
+        {% elif m.status == 'IN_PLAY' or m.status == 'PAUSED' %}status-live
+        {% else %}status-upcoming{% endif %}">
+        {% if m.status == 'FINISHED' %}종료
+        {% elif m.status == 'IN_PLAY' %}진행중
+        {% elif m.status == 'PAUSED' %}휴식
+        {% else %}예정{% endif %}
+      </span>
+    </div>
+    <div class="card-teams">
+      <div class="c-team">
+        <span class="c-flag">{{ m.home_flag }}</span>
+        <span class="c-name {% if 'Korea' in m.home %}highlight{% endif %}">{{ m.home }}</span>
+      </div>
+      <div class="c-score-wrap">
+        {% if m.status == 'FINISHED' or m.status == 'IN_PLAY' %}
+        <div class="c-score">{{ m.score_h }} : {{ m.score_a }}</div>
+        {% else %}
+        <div class="c-score" style="font-size:14px;color:var(--gray);">VS</div>
+        {% endif %}
+        <div class="c-date">{{ m.date_kst }}</div>
+      </div>
+      <div class="c-team right">
+        <span class="c-flag">{{ m.away_flag }}</span>
+        <span class="c-name {% if 'Korea' in m.away %}highlight{% endif %}">{{ m.away }}</span>
+      </div>
+    </div>
+    <div class="card-bottom">
+      {% if m.status == 'FINISHED' %}
+      <a href="https://sports.naver.com" class="btn-small btn-red" target="_blank">하이라이트</a>
+      <a href="https://sports.naver.com" class="btn-small btn-gray" target="_blank">경기 리뷰</a>
+      {% else %}
+      <a href="https://sports.naver.com" class="btn-small btn-red" target="_blank">📺 중계 알림</a>
+      <a href="https://sports.naver.com" class="btn-small btn-gray" target="_blank">경기 미리보기</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+
+  <div class="ad-slot" style="height:280px;margin-top:16px;"><!-- 애드센스 300x250 --></div>
+</section>
+
+<!-- ══════════ GROUP ══════════ -->
+<section id="tab-group" class="tab-section">
+  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="group-card">
+    <div class="group-head">
+      <div class="group-letter">E</div>
+      <span>E조 순위표</span>
+    </div>
+    <table class="group-table">
+      <thead>
+        <tr><th></th><th>팀</th><th>승</th><th>무</th><th>패</th><th>득실</th><th>승점</th></tr>
+      </thead>
+      <tbody>
+        {% for row in standings %}
+        <tr {% if row.is_korea %}class="korea-row"{% endif %}>
+          <td>
+            {% if row.position <= 2 %}<span class="advance-dot"></span>{% else %}<span class="elim-dot"></span>{% endif %}
+            {{ row.position }}
+          </td>
+          <td>{{ row.flag }} {{ row.name }}</td>
+          <td>{{ row.won }}</td>
+          <td>{{ row.draw }}</td>
+          <td>{{ row.lost }}</td>
+          <td>{{ "%+d"|format(row.gd) }}</td>
+          <td><b>{{ row.points }}</b></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" style="text-align:center;padding:16px;color:var(--gray);">대회 시작 후 업데이트됩니다</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="legend">
+      <span><span class="advance-dot"></span>16강 진출권</span>
+      <span><span class="elim-dot"></span>탈락권</span>
+    </div>
+  </div>
+  <div class="ad-slot" style="height:280px;"><!-- 애드센스 300x250 --></div>
+</section>
+
+<!-- ══════════ WATCH ══════════ -->
+<section id="tab-watch" class="tab-section">
+  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="section-title">무료 중계 보기</div>
+  <div class="broadcast-card">
+    <div class="bc-head">
+      <div class="bc-icon" style="background:#03cf5d20;">N</div>
+      <div><div class="bc-name">네이버 스포츠</div><div class="bc-sub">무료 · 모바일/PC</div></div>
+    </div>
+    <div class="bc-body">
+      <p>네이버 스포츠에서 월드컵 한국 경기 실시간 중계 제공. 하이라이트·다시보기도 무료.</p>
+      <a href="https://sports.naver.com" class="btn-bc red" target="_blank">📺 네이버 스포츠 중계 보기</a>
+    </div>
+  </div>
+  <div class="broadcast-card">
+    <div class="bc-head">
+      <div class="bc-icon" style="background:#fee50020;">K</div>
+      <div><div class="bc-name">카카오TV</div><div class="bc-sub">무료 · 하이라이트</div></div>
+    </div>
+    <div class="bc-body">
+      <p>카카오TV에서 경기 하이라이트와 실시간 중계 무료 시청 가능합니다.</p>
+      <a href="https://tv.kakao.com" class="btn-bc navy" target="_blank">📺 카카오TV 중계 보기</a>
+    </div>
+  </div>
+  <div class="broadcast-card">
+    <div class="bc-head">
+      <div class="bc-icon" style="background:#ff000020;">▶</div>
+      <div><div class="bc-name">FIFA 공식 유튜브</div><div class="bc-sub">무료 · 하이라이트</div></div>
+    </div>
+    <div class="bc-body">
+      <p>FIFA 공식 유튜브에서 경기 하이라이트와 골 장면을 빠르게 확인하세요.</p>
+      <a href="https://youtube.com/@fifaworldcup" class="btn-bc red" target="_blank">▶ FIFA 유튜브 보기</a>
+    </div>
+  </div>
+  <div class="broadcast-card">
+    <div class="bc-head">
+      <div class="bc-icon" style="background:#0057ff20;">📡</div>
+      <div><div class="bc-name">KBS·MBC·SBS</div><div class="bc-sub">지상파 무료 생중계</div></div>
+    </div>
+    <div class="bc-body">
+      <p>한국 경기는 지상파 3사에서 무료 생중계. 각 방송사 앱에서도 시청 가능합니다.</p>
+      <a href="https://sports.kbs.co.kr" class="btn-bc navy" target="_blank">📡 KBS 스포츠 중계</a>
+    </div>
+  </div>
+  <div class="ad-slot" style="height:280px;margin-top:16px;"><!-- 애드센스 300x250 --></div>
+</section>
+
+<!-- ══════════ PLAYERS ══════════ -->
+<section id="tab-players" class="tab-section">
+  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="section-title">🇰🇷 국가대표 주요 선수</div>
+  <div class="player-grid">
+    <div class="player-card top1"><div class="rank">⭐ NO.1</div><div class="flag">🇰🇷</div><div class="pname">손흥민</div><div class="pvalue">몸값 <b>€45M</b></div></div>
+    <div class="player-card"><div class="rank">NO.2</div><div class="flag">🇰🇷</div><div class="pname">이강인</div><div class="pvalue">몸값 <b>€40M</b></div></div>
+    <div class="player-card"><div class="rank">NO.3</div><div class="flag">🇰🇷</div><div class="pname">김민재</div><div class="pvalue">몸값 <b>€38M</b></div></div>
+    <div class="player-card"><div class="rank">NO.4</div><div class="flag">🇰🇷</div><div class="pname">황희찬</div><div class="pvalue">몸값 <b>€22M</b></div></div>
+    <div class="player-card"><div class="rank">NO.5</div><div class="flag">🇰🇷</div><div class="pname">정우영</div><div class="pvalue">몸값 <b>€18M</b></div></div>
+    <div class="player-card"><div class="rank">NO.6</div><div class="flag">🇰🇷</div><div class="pname">이재성</div><div class="pvalue">몸값 <b>€12M</b></div></div>
+  </div>
+  <div class="section-title">전술 포메이션</div>
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+    <div style="font-size:12px;color:var(--gray);margin-bottom:10px;">홍명보 감독 · 4-2-3-1</div>
+    <div style="background:#27ae60;border-radius:10px;padding:20px 10px;color:#fff;font-size:11px;font-weight:700;line-height:2.4;">
+      <div>김승규</div>
+      <div>설영우 · 김민재 · 김영권 · 김진수</div>
+      <div>황인범 · 이재성</div>
+      <div>이강인 · 손흥민 · 황희찬</div>
+      <div style="font-size:13px;font-weight:900;">조규성</div>
+    </div>
+  </div>
+  <a href="https://sports.naver.com" class="btn-watch" target="_blank">📋 전체 26인 명단 보기</a>
+  <div class="ad-slot" style="height:280px;margin-top:16px;"><!-- 애드센스 300x250 --></div>
+</section>
+
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function showTab(id, el) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  else {
+    var btns = document.querySelectorAll('.tab-btn');
+    var map = {home:0,schedule:1,group:2,watch:3,players:4};
+    if (map[id] !== undefined) btns[map[id]].classList.add('active');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// 카운트다운 (next_match 날짜 기준)
+{% if next_match %}
+var targetDateStr = "{{ next_match.date_kst }}";
+// fetch_and_build.py에서 ISO 형식으로도 저장하도록 확장 가능
+// 여기서는 정적으로 다음 경기 UTC 시각 사용
+var nextMatchTime = new Date("2026-06-21T04:00:00+09:00");
+function updateCountdown() {
+  var diff = nextMatchTime - new Date();
+  if (diff <= 0) {
+    ['cd-d','cd-h','cd-m','cd-s'].forEach(function(id){document.getElementById(id).textContent='00';});
+    return;
+  }
+  document.getElementById('cd-d').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(Math.floor(diff%3600000/60000)).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(Math.floor(diff%60000/1000)).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+{% endif %}
+</script>
+</body>
+</html>
