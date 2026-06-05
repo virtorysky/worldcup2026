@@ -1,6 +1,7 @@
 import os
 import json
 import requests
+import base64
 from datetime import datetime, timezone, timedelta
 from jinja2 import Template
 
@@ -11,7 +12,12 @@ KST       = timezone(timedelta(hours=9))
 COMPETITION_CODE = "WC"
 KOREA_TEAM_ID = 732
 
-# ── 백업 데이터 (API 미응답시 사용) ──────────────────
+# 워드프레스 설정
+WP_DOMAIN   = "https://news.simple-life6.com"
+WP_USER     = os.environ.get("WP_USER", "")
+WP_PASSWORD = os.environ.get("WP_APP_PASSWORD", "")
+WP_PAGE_SLUG = "worldcup2026"  # 워드프레스 페이지 슬러그
+
 FALLBACK_MATCHES = [
     {
         "home": "Korea Republic", "away": "Costa Rica",
@@ -46,39 +52,6 @@ FALLBACK_STANDINGS = [
     {"position":4,"name":"Costa Rica","flag":"🇨🇷","played":0,"won":0,"draw":0,"lost":0,"gd":0,"points":0,"is_korea":False},
 ]
 
-# ── API 호출 ──────────────────────────────────────────
-def fetch_korea_matches():
-    url = f"{BASE_URL}/teams/{KOREA_TEAM_ID}/matches"
-    params = {"competitions": COMPETITION_CODE, "status": "SCHEDULED,IN_PLAY,PAUSED,FINISHED"}
-    try:
-        r = requests.get(url, headers=HEADERS, params=params, timeout=10)
-        r.raise_for_status()
-        data = r.json().get("matches", [])
-        print(f"  API 경기 데이터: {len(data)}개")
-        return data
-    except Exception as e:
-        print(f"  [경고] 경기 API 실패: {e} → 백업 데이터 사용")
-        return []
-
-def fetch_group_standings():
-    url = f"{BASE_URL}/competitions/{COMPETITION_CODE}/standings"
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=10)
-        r.raise_for_status()
-        standings = r.json().get("standings", [])
-        for s in standings:
-            if s.get("type") == "TOTAL":
-                for group in s.get("groups", []):
-                    teams = [t["team"]["name"] for t in group.get("table", [])]
-                    if "Korea Republic" in teams or "South Korea" in teams:
-                        print(f"  API 순위표: {len(group.get('table',[]))}팀")
-                        return group.get("table", [])
-        return []
-    except Exception as e:
-        print(f"  [경고] 순위표 API 실패: {e} → 백업 데이터 사용")
-        return []
-
-# ── 데이터 가공 ───────────────────────────────────────
 FLAG_MAP = {
     "Korea Republic": "🇰🇷", "South Korea": "🇰🇷",
     "Germany": "🇩🇪", "Mexico": "🇲🇽", "Costa Rica": "🇨🇷",
@@ -96,18 +69,46 @@ def get_flag(name):
 def fmt_kst(utc_str):
     try:
         dt = datetime.fromisoformat(utc_str.replace("Z", "+00:00"))
-        kst = dt.astimezone(KST)
-        return kst.strftime("%-m/%-d %H:%M")
+        return dt.astimezone(KST).strftime("%-m/%-d %H:%M")
     except:
         return utc_str
 
 def fmt_kst_iso(utc_str):
     try:
         dt = datetime.fromisoformat(utc_str.replace("Z", "+00:00"))
-        kst = dt.astimezone(KST)
-        return kst.isoformat()
+        return dt.astimezone(KST).isoformat()
     except:
         return ""
+
+def fetch_korea_matches():
+    url = f"{BASE_URL}/teams/{KOREA_TEAM_ID}/matches"
+    params = {"competitions": COMPETITION_CODE, "status": "SCHEDULED,IN_PLAY,PAUSED,FINISHED"}
+    try:
+        r = requests.get(url, headers=HEADERS, params=params, timeout=10)
+        r.raise_for_status()
+        data = r.json().get("matches", [])
+        print(f"  API 경기 데이터: {len(data)}개")
+        return data
+    except Exception as e:
+        print(f"  [경고] 경기 API 실패: {e}")
+        return []
+
+def fetch_group_standings():
+    url = f"{BASE_URL}/competitions/{COMPETITION_CODE}/standings"
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=10)
+        r.raise_for_status()
+        standings = r.json().get("standings", [])
+        for s in standings:
+            if s.get("type") == "TOTAL":
+                for group in s.get("groups", []):
+                    teams = [t["team"]["name"] for t in group.get("table", [])]
+                    if "Korea Republic" in teams or "South Korea" in teams:
+                        return group.get("table", [])
+        return []
+    except Exception as e:
+        print(f"  [경고] 순위표 API 실패: {e}")
+        return []
 
 def process_matches(raw):
     result = []
@@ -156,27 +157,70 @@ def last_korea_match(matches):
     finished = [m for m in matches if m["is_korea"] and m["status"] == "FINISHED"]
     return finished[-1] if finished else None
 
-# ── 메인 ─────────────────────────────────────────────
+def get_wp_page_id(slug):
+    """슬러그로 워드프레스 페이지 ID 조회"""
+    url = f"{WP_DOMAIN}/wp-json/wp/v2/pages?slug={slug}"
+    try:
+        r = requests.get(url, timeout=10)
+        r.raise_for_status()
+        pages = r.json()
+        if pages:
+            print(f"  워드프레스 페이지 ID: {pages[0]['id']}")
+            return pages[0]["id"]
+        print(f"  [경고] 슬러그 '{slug}' 페이지 없음 → 새 페이지 생성")
+        return None
+    except Exception as e:
+        print(f"  [경고] 페이지 ID 조회 실패: {e}")
+        return None
+
+def push_to_wordpress(html_content):
+    """워드프레스 페이지 생성 또는 업데이트"""
+    token = base64.b64encode(f"{WP_USER}:{WP_PASSWORD}".encode()).decode()
+    headers = {
+        "Authorization": f"Basic {token}",
+        "Content-Type": "application/json",
+    }
+
+    page_id = get_wp_page_id(WP_PAGE_SLUG)
+
+    payload = {
+        "title": "2026 월드컵 한국 경기 올인원 | 일정·결과·중계",
+        "content": html_content,
+        "status": "publish",
+        "slug": WP_PAGE_SLUG,
+    }
+
+    try:
+        if page_id:
+            # 기존 페이지 업데이트
+            url = f"{WP_DOMAIN}/wp-json/wp/v2/pages/{page_id}"
+            r = requests.put(url, headers=headers, json=payload, timeout=30)
+        else:
+            # 새 페이지 생성
+            url = f"{WP_DOMAIN}/wp-json/wp/v2/pages"
+            r = requests.post(url, headers=headers, json=payload, timeout=30)
+
+        r.raise_for_status()
+        result = r.json()
+        print(f"  ✅ 워드프레스 업데이트 완료: {result.get('link', '')}")
+        return True
+    except Exception as e:
+        print(f"  [오류] 워드프레스 업데이트 실패: {e}")
+        if hasattr(e, 'response') and e.response is not None:
+            print(f"  응답: {e.response.text[:300]}")
+        return False
+
 if __name__ == "__main__":
     print("▶ 데이터 수집 시작...")
 
     raw_matches   = fetch_korea_matches()
     raw_standings = fetch_group_standings()
 
-    # API 데이터 있으면 사용, 없으면 백업 사용
-    if raw_matches:
-        matches = process_matches(raw_matches)
-        print("  ✅ API 경기 데이터 사용")
-    else:
-        matches = FALLBACK_MATCHES
-        print("  ⚠️ 백업 경기 데이터 사용")
+    matches   = process_matches(raw_matches) if raw_matches else FALLBACK_MATCHES
+    standings = process_standings(raw_standings) if raw_standings else FALLBACK_STANDINGS
 
-    if raw_standings:
-        standings = process_standings(raw_standings)
-        print("  ✅ API 순위표 사용")
-    else:
-        standings = FALLBACK_STANDINGS
-        print("  ⚠️ 백업 순위표 사용")
+    print(f"  경기 데이터: {'API' if raw_matches else '백업'} 사용")
+    print(f"  순위표 데이터: {'API' if raw_standings else '백업'} 사용")
 
     next_m  = next_korea_match(matches)
     last_m  = last_korea_match(matches)
@@ -187,11 +231,21 @@ if __name__ == "__main__":
                    "next_match": next_m, "last_match": last_m,
                    "updated_at": updated}, f, ensure_ascii=False, indent=2)
 
+    # GitHub Pages용 HTML 생성
     tmpl = Template(open("template.html").read())
     html = tmpl.render(matches=matches, standings=standings,
                        next_match=next_m, last_match=last_m,
                        updated_at=updated)
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
+    print(f"  ✅ index.html 생성 완료")
 
-    print(f"✅ 완료: {updated}")
+    # 워드프레스에 푸시 (애드센스 코드 포함된 template 사용)
+    tmpl_wp = Template(open("template_wp.html").read())
+    html_wp = tmpl_wp.render(matches=matches, standings=standings,
+                              next_match=next_m, last_match=last_m,
+                              updated_at=updated)
+    print("▶ 워드프레스 업데이트 시작...")
+    push_to_wordpress(html_wp)
+
+    print(f"✅ 전체 완료: {updated}")
