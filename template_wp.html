@@ -1,0 +1,323 @@
+<!-- 2026 월드컵 한국 경기 올인원 -->
+<style>
+  #wc-app { font-family: 'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif; background: #f5f6fa; color: #2c3e50; max-width: 480px; margin: 0 auto; }
+  #wc-app * { box-sizing: border-box; margin: 0; padding: 0; }
+  #wc-app a, #wc-app button { -webkit-tap-highlight-color: transparent; }
+  .wc-tab-bar { display: flex; background: #2c3e50; overflow-x: auto; scrollbar-width: none; border-bottom: 3px solid #c0392b; }
+  .wc-tab-bar::-webkit-scrollbar { display: none; }
+  .wc-tab-btn { flex: 0 0 auto; padding: 13px 16px; min-height: 44px; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 700; border: none; background: none; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s; }
+  .wc-tab-btn.active { color: #fff; border-bottom-color: #f39c12; }
+  .wc-section { display: none; padding: 16px; }
+  .wc-section.active { display: block; }
+  .wc-updated { font-size: 10px; color: #7f8c8d; text-align: right; padding: 4px 0 8px; }
+  .wc-ad { margin-bottom: 16px; }
+  .wc-bookmark { background: linear-gradient(135deg, #1a252f 0%, #2980b9 100%); border-radius: 14px; padding: 18px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .wc-bookmark strong { color: #fff; font-size: 14px; display: block; margin-bottom: 3px; }
+  .wc-bookmark span { color: rgba(255,255,255,0.65); font-size: 12px; line-height: 1.4; display: block; }
+  .wc-bk-btn { background: #f39c12; color: #1a252f; font-size: 11px; font-weight: 800; padding: 8px 12px; border-radius: 8px; border: none; cursor: pointer; flex-shrink: 0; white-space: nowrap; min-height: 44px; }
+  .wc-hero { background: #1a252f; border-radius: 14px; padding: 20px 16px; margin-bottom: 16px; position: relative; overflow: hidden; }
+  .wc-hero::before { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(192,57,43,0.15); border-radius: 50%; }
+  .wc-next-label { font-size: 10px; font-weight: 800; color: #f39c12; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .wc-teams { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .wc-team { text-align: center; flex: 1; }
+  .wc-flag { font-size: 36px; line-height: 1; margin-bottom: 6px; }
+  .wc-tname { color: #fff; font-size: 13px; font-weight: 700; }
+  .wc-vs { color: rgba(255,255,255,0.4); font-size: 18px; font-weight: 900; }
+  .wc-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .wc-chip { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+  .wc-chip.red { background: #c0392b; color: #fff; }
+  .wc-btn-watch { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 13px; background: #c0392b; color: #fff; border-radius: 10px; font-size: 14px; font-weight: 800; text-decoration: none; border: none; cursor: pointer; min-height: 44px; margin-bottom: 8px; }
+  .wc-btn-sub { display: flex; align-items: center; justify-content: center; width: 100%; padding: 11px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border-radius: 10px; font-size: 13px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; min-height: 44px; }
+  .wc-countdown { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 1px solid #dfe6e9; text-align: center; }
+  .wc-cd-title { font-size: 12px; color: #7f8c8d; font-weight: 600; margin-bottom: 12px; }
+  .wc-cd-boxes { display: flex; justify-content: center; gap: 8px; }
+  .wc-cd-box { background: #1a252f; border-radius: 10px; padding: 10px 14px; min-width: 58px; }
+  .wc-cd-num { color: #fff; font-size: 22px; font-weight: 900; line-height: 1; }
+  .wc-cd-label { color: rgba(255,255,255,0.5); font-size: 10px; font-weight: 700; margin-top: 4px; }
+  .wc-stitle { font-size: 13px; font-weight: 800; color: #7f8c8d; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .wc-stitle::after { content: ''; flex: 1; height: 1px; background: #dfe6e9; }
+  .wc-card { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #dfe6e9; }
+  .wc-card.korea { border-left: 4px solid #c0392b; }
+  .wc-card.finished { opacity: 0.85; }
+  .wc-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .wc-card-group { font-size: 10px; font-weight: 800; color: #7f8c8d; }
+  .wc-status { font-size: 10px; font-weight: 800; padding: 3px 9px; border-radius: 20px; }
+  .wc-upcoming { background: #fef9e7; color: #f39c12; }
+  .wc-live { background: #d5f5e3; color: #27ae60; animation: wc-blink 1.2s infinite; }
+  .wc-done { background: #ecf0f1; color: #7f8c8d; }
+  .wc-card-teams { display: flex; align-items: center; justify-content: space-between; }
+  .wc-cteam { display: flex; align-items: center; gap: 8px; flex: 1; }
+  .wc-cteam.right { flex-direction: row-reverse; }
+  .wc-cflag { font-size: 22px; }
+  .wc-cname { font-size: 14px; font-weight: 700; color: #2c3e50; }
+  .wc-cname.hl { color: #c0392b; }
+  .wc-score-wrap { display: flex; align-items: center; flex-direction: column; gap: 4px; }
+  .wc-score { font-size: 20px; font-weight: 900; color: #1a252f; min-width: 44px; text-align: center; }
+  .wc-date { font-size: 10px; color: #7f8c8d; font-weight: 600; }
+  .wc-card-btns { display: flex; gap: 6px; margin-top: 12px; }
+  .wc-btn-sm { flex: 1; padding: 10px 8px; min-height: 44px; border-radius: 8px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .wc-btn-red { background: #c0392b; color: #fff; }
+  .wc-btn-gray { background: #ecf0f1; color: #2c3e50; }
+  .wc-group-card { background: #fff; border-radius: 12px; border: 1px solid #dfe6e9; margin-bottom: 16px; overflow: hidden; }
+  .wc-group-head { background: #1a252f; padding: 10px 16px; font-size: 13px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+  .wc-group-letter { background: #c0392b; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; }
+  table.wc-table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
+  table.wc-table th { background: #ecf0f1; padding: 7px 4px; color: #7f8c8d; font-weight: 700; text-align: center; white-space: nowrap; }
+  table.wc-table th:first-child { text-align: left; padding-left: 10px; width: 22px; }
+  table.wc-table th:nth-child(2) { text-align: left; }
+  table.wc-table th:nth-child(n+3) { width: 30px; }
+  table.wc-table td { padding: 10px 4px; text-align: center; border-top: 1px solid #dfe6e9; }
+  table.wc-table td:first-child { text-align: left; padding-left: 10px; }
+  table.wc-table td:nth-child(2) { text-align: left; }
+  table.wc-table tr.korea-row td { background: #fef9f9; font-weight: 700; }
+  table.wc-table tr.korea-row td:first-child { color: #c0392b; }
+  .wc-dot-on, .wc-dot-off { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .wc-dot-on { background: #27ae60; }
+  .wc-dot-off { background: #7f8c8d; }
+  .wc-legend { display: flex; gap: 12px; padding: 10px 16px; font-size: 11px; color: #7f8c8d; }
+  .wc-bc-card { background: #fff; border-radius: 12px; border: 1px solid #dfe6e9; margin-bottom: 12px; overflow: hidden; }
+  .wc-bc-head { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #dfe6e9; }
+  .wc-bc-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .wc-bc-name { font-size: 14px; font-weight: 800; }
+  .wc-bc-sub { font-size: 11px; color: #7f8c8d; margin-top: 1px; }
+  .wc-bc-body { padding: 12px 16px; }
+  .wc-bc-body p { font-size: 13px; line-height: 1.6; margin-bottom: 10px; }
+  .wc-btn-bc { display: flex; align-items: center; justify-content: center; width: 100%; padding: 11px; min-height: 44px; border-radius: 8px; font-size: 13px; font-weight: 800; text-decoration: none; border: none; cursor: pointer; }
+  .wc-btn-bc.red { background: #c0392b; color: #fff; }
+  .wc-btn-bc.navy { background: #1a252f; color: #fff; }
+  .wc-player-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .wc-player-card { background: #fff; border-radius: 12px; border: 1px solid #dfe6e9; padding: 14px 12px; text-align: center; display: flex; flex-direction: column; align-items: center; min-height: 110px; }
+  .wc-player-card .wc-rank { font-size: 10px; font-weight: 800; color: #f39c12; margin-bottom: 4px; }
+  .wc-player-card .wc-pflag { font-size: 22px; margin-bottom: 4px; }
+  .wc-player-card .wc-pname { font-size: 13px; font-weight: 800; margin-bottom: 2px; }
+  .wc-player-card .wc-pval { font-size: 12px; color: #7f8c8d; }
+  .wc-player-card .wc-pval b { color: #c0392b; font-size: 14px; }
+  .wc-player-card.top1 { border: 2px solid #f39c12; }
+  .wc-quicklinks { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .wc-ql-btn { background: #fff; border: 1px solid #dfe6e9; border-radius: 12px; padding: 16px; text-align: center; cursor: pointer; font-size: 13px; font-weight: 700; min-height: 80px; }
+  @keyframes wc-blink { 0%,100%{opacity:1} 50%{opacity:0.5} }
+</style>
+
+<div id="wc-app">
+  <nav class="wc-tab-bar">
+    <button class="wc-tab-btn active" onclick="wcTab('home',this)">🏠 홈</button>
+    <button class="wc-tab-btn" onclick="wcTab('schedule',this)">📅 일정·결과</button>
+    <button class="wc-tab-btn" onclick="wcTab('group',this)">🏆 조별순위</button>
+    <button class="wc-tab-btn" onclick="wcTab('watch',this)">📺 중계보기</button>
+    <button class="wc-tab-btn" onclick="wcTab('players',this)">⭐ 선수</button>
+  </nav>
+
+  <!-- HOME -->
+  <div id="wc-home" class="wc-section active">
+    <div class="wc-updated">🔄 마지막 업데이트: {{ updated_at }}</div>
+    <div class="wc-ad">
+      <!-- 애드센스 -->
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <div class="wc-bookmark">
+      <div style="font-size:30px;flex-shrink:0;">🔖</div>
+      <div><strong>매일 경기결과 여기서 확인!</strong><span>즐겨찾기 추가하고 빠르게 접속하세요</span></div>
+      <button class="wc-bk-btn" onclick="alert('주소창의 ☆ 버튼을 눌러 즐겨찾기 추가하세요!')">저장</button>
+    </div>
+    {% if next_match %}
+    <div class="wc-hero">
+      <div class="wc-next-label">🇰🇷 다음 한국 경기</div>
+      <div class="wc-teams">
+        <div class="wc-team"><div class="wc-flag">{{ next_match.home_flag }}</div><div class="wc-tname">{{ next_match.home }}</div></div>
+        <div class="wc-vs">VS</div>
+        <div class="wc-team"><div class="wc-flag">{{ next_match.away_flag }}</div><div class="wc-tname">{{ next_match.away }}</div></div>
+      </div>
+      <div class="wc-meta">
+        <span class="wc-chip red">{{ next_match.matchday }}차전</span>
+        <span class="wc-chip">{{ next_match.date_kst }} KST</span>
+      </div>
+      <a href="https://sports.naver.com" class="wc-btn-watch" target="_blank">📺 실시간 중계 바로보기</a>
+      <a href="https://sports.naver.com" class="wc-btn-sub" target="_blank">📱 네이버 스포츠 중계 링크</a>
+    </div>
+    <div class="wc-countdown">
+      <div class="wc-cd-title">🇰🇷 다음 경기 시작까지</div>
+      <div class="wc-cd-boxes">
+        <div class="wc-cd-box"><div class="wc-cd-num" id="wc-d">--</div><div class="wc-cd-label">일</div></div>
+        <div class="wc-cd-box"><div class="wc-cd-num" id="wc-h">--</div><div class="wc-cd-label">시간</div></div>
+        <div class="wc-cd-box"><div class="wc-cd-num" id="wc-m">--</div><div class="wc-cd-label">분</div></div>
+        <div class="wc-cd-box"><div class="wc-cd-num" id="wc-s">--</div><div class="wc-cd-label">초</div></div>
+      </div>
+    </div>
+    {% endif %}
+    {% if last_match %}
+    <div class="wc-stitle">최근 경기 결과</div>
+    <div class="wc-card korea finished">
+      <div class="wc-card-top"><span class="wc-card-group">{{ last_match.matchday }}차전</span><span class="wc-status wc-done">종료</span></div>
+      <div class="wc-card-teams">
+        <div class="wc-cteam"><span class="wc-cflag">{{ last_match.home_flag }}</span><span class="wc-cname {% if 'Korea' in last_match.home %}hl{% endif %}">{{ last_match.home }}</span></div>
+        <div class="wc-score-wrap"><div class="wc-score">{{ last_match.score_h }} : {{ last_match.score_a }}</div><div class="wc-date">{{ last_match.date_kst }}</div></div>
+        <div class="wc-cteam right"><span class="wc-cflag">{{ last_match.away_flag }}</span><span class="wc-cname {% if 'Korea' in last_match.away %}hl{% endif %}">{{ last_match.away }}</span></div>
+      </div>
+      <div class="wc-card-btns">
+        <a href="https://sports.naver.com" class="wc-btn-sm wc-btn-red" target="_blank">하이라이트 보기</a>
+        <a href="https://sports.naver.com" class="wc-btn-sm wc-btn-gray" target="_blank">경기 분석</a>
+      </div>
+    </div>
+    {% endif %}
+    <div class="wc-ad" style="min-height:250px;">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <div class="wc-quicklinks">
+      <button class="wc-ql-btn" onclick="wcTab('schedule',null)">📅<br><span style="font-size:11px;color:#7f8c8d;display:block;margin-top:4px;">전체 일정</span></button>
+      <button class="wc-ql-btn" onclick="wcTab('group',null)">🏆<br><span style="font-size:11px;color:#7f8c8d;display:block;margin-top:4px;">E조 순위</span></button>
+      <button class="wc-ql-btn" onclick="wcTab('watch',null)">📺<br><span style="font-size:11px;color:#7f8c8d;display:block;margin-top:4px;">중계보기</span></button>
+      <button class="wc-ql-btn" onclick="wcTab('players',null)">⭐<br><span style="font-size:11px;color:#7f8c8d;display:block;margin-top:4px;">선수 정보</span></button>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div id="wc-schedule" class="wc-section">
+    <div class="wc-ad">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <div class="wc-stitle">🇰🇷 한국 전체 일정</div>
+    {% for m in matches %}{% if m.is_korea %}
+    <div class="wc-card korea {% if m.status == 'FINISHED' %}finished{% endif %}">
+      <div class="wc-card-top">
+        <span class="wc-card-group">{{ m.matchday }}차전</span>
+        <span class="wc-status {% if m.status == 'FINISHED' %}wc-done{% elif m.status == 'IN_PLAY' or m.status == 'PAUSED' %}wc-live{% else %}wc-upcoming{% endif %}">
+          {% if m.status == 'FINISHED' %}종료{% elif m.status == 'IN_PLAY' %}진행중{% elif m.status == 'PAUSED' %}휴식{% else %}예정{% endif %}
+        </span>
+      </div>
+      <div class="wc-card-teams">
+        <div class="wc-cteam"><span class="wc-cflag">{{ m.home_flag }}</span><span class="wc-cname {% if 'Korea' in m.home %}hl{% endif %}">{{ m.home }}</span></div>
+        <div class="wc-score-wrap">
+          {% if m.status == 'FINISHED' or m.status == 'IN_PLAY' %}<div class="wc-score">{{ m.score_h }} : {{ m.score_a }}</div>{% else %}<div class="wc-score" style="font-size:14px;color:#7f8c8d;">VS</div>{% endif %}
+          <div class="wc-date">{{ m.date_kst }}</div>
+        </div>
+        <div class="wc-cteam right"><span class="wc-cflag">{{ m.away_flag }}</span><span class="wc-cname {% if 'Korea' in m.away %}hl{% endif %}">{{ m.away }}</span></div>
+      </div>
+      <div class="wc-card-btns">
+        {% if m.status == 'FINISHED' %}
+        <a href="https://sports.naver.com" class="wc-btn-sm wc-btn-red" target="_blank">하이라이트</a>
+        <a href="https://sports.naver.com" class="wc-btn-sm wc-btn-gray" target="_blank">경기 리뷰</a>
+        {% else %}
+        <a href="https://sports.naver.com" class="wc-btn-sm wc-btn-red" target="_blank">📺 중계 알림</a>
+        <a href="https://sports.naver.com" class="wc-btn-sm wc-btn-gray" target="_blank">경기 미리보기</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}{% endfor %}
+    <div class="wc-ad" style="min-height:250px;margin-top:16px;">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+
+  <!-- GROUP -->
+  <div id="wc-group" class="wc-section">
+    <div class="wc-ad">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <div class="wc-group-card">
+      <div class="wc-group-head"><div class="wc-group-letter">E</div><span>E조 순위표</span></div>
+      <table class="wc-table">
+        <thead><tr><th></th><th>팀</th><th>승</th><th>무</th><th>패</th><th>득실</th><th>승점</th></tr></thead>
+        <tbody>
+          {% for row in standings %}
+          <tr {% if row.is_korea %}class="korea-row"{% endif %}>
+            <td>{% if row.position <= 2 %}<span class="wc-dot-on"></span>{% else %}<span class="wc-dot-off"></span>{% endif %}{{ row.position }}</td>
+            <td>{{ row.flag }} {{ row.name }}</td>
+            <td>{{ row.won }}</td><td>{{ row.draw }}</td><td>{{ row.lost }}</td>
+            <td>{{ "%+d"|format(row.gd) }}</td>
+            <td><b>{{ row.points }}</b></td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7" style="text-align:center;padding:16px;color:#7f8c8d;">대회 시작 후 업데이트됩니다</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="wc-legend"><span><span class="wc-dot-on"></span>16강 진출권</span><span><span class="wc-dot-off"></span>탈락권</span></div>
+    </div>
+    <div class="wc-ad" style="min-height:250px;">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+
+  <!-- WATCH -->
+  <div id="wc-watch" class="wc-section">
+    <div class="wc-ad">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <div class="wc-stitle">무료 중계 보기</div>
+    <div class="wc-bc-card"><div class="wc-bc-head"><div class="wc-bc-icon" style="background:#03cf5d20;">N</div><div><div class="wc-bc-name">네이버 스포츠</div><div class="wc-bc-sub">무료 · 모바일/PC</div></div></div><div class="wc-bc-body"><p>네이버 스포츠에서 월드컵 한국 경기 실시간 중계 제공. 하이라이트·다시보기도 무료.</p><a href="https://sports.naver.com" class="wc-btn-bc red" target="_blank">📺 네이버 스포츠 중계 보기</a></div></div>
+    <div class="wc-bc-card"><div class="wc-bc-head"><div class="wc-bc-icon" style="background:#fee50020;">K</div><div><div class="wc-bc-name">카카오TV</div><div class="wc-bc-sub">무료 · 하이라이트</div></div></div><div class="wc-bc-body"><p>카카오TV에서 경기 하이라이트와 실시간 중계 무료 시청 가능합니다.</p><a href="https://tv.kakao.com" class="wc-btn-bc navy" target="_blank">📺 카카오TV 중계 보기</a></div></div>
+    <div class="wc-bc-card"><div class="wc-bc-head"><div class="wc-bc-icon" style="background:#ff000020;">▶</div><div><div class="wc-bc-name">FIFA 공식 유튜브</div><div class="wc-bc-sub">무료 · 하이라이트</div></div></div><div class="wc-bc-body"><p>FIFA 공식 유튜브에서 경기 하이라이트와 골 장면을 빠르게 확인하세요.</p><a href="https://youtube.com/@fifaworldcup" class="wc-btn-bc red" target="_blank">▶ FIFA 유튜브 보기</a></div></div>
+    <div class="wc-bc-card"><div class="wc-bc-head"><div class="wc-bc-icon" style="background:#0057ff20;">📡</div><div><div class="wc-bc-name">KBS·MBC·SBS</div><div class="wc-bc-sub">지상파 무료 생중계</div></div></div><div class="wc-bc-body"><p>한국 경기는 지상파 3사에서 무료 생중계. 각 방송사 앱에서도 시청 가능합니다.</p><a href="https://sports.kbs.co.kr" class="wc-btn-bc navy" target="_blank">📡 KBS 스포츠 중계</a></div></div>
+    <div class="wc-ad" style="min-height:250px;margin-top:16px;">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+
+  <!-- PLAYERS -->
+  <div id="wc-players" class="wc-section">
+    <div class="wc-ad">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <div class="wc-stitle">🇰🇷 국가대표 주요 선수</div>
+    <div class="wc-player-grid">
+      <div class="wc-player-card top1"><div class="wc-rank">⭐ NO.1</div><div class="wc-pflag">🇰🇷</div><div class="wc-pname">손흥민</div><div class="wc-pval">몸값 <b>€45M</b></div></div>
+      <div class="wc-player-card"><div class="wc-rank">NO.2</div><div class="wc-pflag">🇰🇷</div><div class="wc-pname">이강인</div><div class="wc-pval">몸값 <b>€40M</b></div></div>
+      <div class="wc-player-card"><div class="wc-rank">NO.3</div><div class="wc-pflag">🇰🇷</div><div class="wc-pname">김민재</div><div class="wc-pval">몸값 <b>€38M</b></div></div>
+      <div class="wc-player-card"><div class="wc-rank">NO.4</div><div class="wc-pflag">🇰🇷</div><div class="wc-pname">황희찬</div><div class="wc-pval">몸값 <b>€22M</b></div></div>
+      <div class="wc-player-card"><div class="wc-rank">NO.5</div><div class="wc-pflag">🇰🇷</div><div class="wc-pname">정우영</div><div class="wc-pval">몸값 <b>€18M</b></div></div>
+      <div class="wc-player-card"><div class="wc-rank">NO.6</div><div class="wc-pflag">🇰🇷</div><div class="wc-pname">이재성</div><div class="wc-pval">몸값 <b>€12M</b></div></div>
+    </div>
+    <div class="wc-stitle">전술 포메이션</div>
+    <div style="background:#fff;border:1px solid #dfe6e9;border-radius:12px;padding:16px;margin-bottom:16px;text-align:center;">
+      <div style="font-size:12px;color:#7f8c8d;margin-bottom:10px;">홍명보 감독 · 4-2-3-1</div>
+      <div style="background:#27ae60;border-radius:10px;padding:20px 10px;color:#fff;font-size:11px;font-weight:700;line-height:2.4;">
+        <div>김승규</div>
+        <div>설영우 · 김민재 · 김영권 · 김진수</div>
+        <div>황인범 · 이재성</div>
+        <div>이강인 · 손흥민 · 황희찬</div>
+        <div style="font-size:13px;font-weight:900;">조규성</div>
+      </div>
+    </div>
+    <a href="https://sports.naver.com" class="wc-btn-watch" target="_blank">📋 전체 26인 명단 보기</a>
+    <div class="wc-ad" style="min-height:250px;margin-top:16px;">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6673668298295600" data-ad-slot="6644186273" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+</div>
+
+<script>
+function wcTab(id, el) {
+  document.querySelectorAll('.wc-section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.wc-tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('wc-' + id).classList.add('active');
+  if (el) { el.classList.add('active'); }
+  else {
+    var map = {home:0,schedule:1,group:2,watch:3,players:4};
+    var btns = document.querySelectorAll('.wc-tab-btn');
+    if (map[id] !== undefined) btns[map[id]].classList.add('active');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+{% if next_match %}
+var wcNextTime = new Date("{{ next_match.date_iso }}");
+function wcCountdown() {
+  var diff = wcNextTime - new Date();
+  if (diff <= 0) { ['wc-d','wc-h','wc-m','wc-s'].forEach(function(i){document.getElementById(i).textContent='00';}); return; }
+  document.getElementById('wc-d').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
+  document.getElementById('wc-h').textContent = String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
+  document.getElementById('wc-m').textContent = String(Math.floor(diff%3600000/60000)).padStart(2,'0');
+  document.getElementById('wc-s').textContent = String(Math.floor(diff%60000/1000)).padStart(2,'0');
+}
+wcCountdown(); setInterval(wcCountdown, 1000);
+{% endif %}
+</script>
