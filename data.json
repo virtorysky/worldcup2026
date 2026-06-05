@@ -1,7 +1,108 @@
 {
-  "matches": [],
-  "standings": [],
-  "next_match": null,
+  "matches": [
+    {
+      "home": "Korea Republic",
+      "away": "Costa Rica",
+      "home_flag": "🇰🇷",
+      "away_flag": "🇨🇷",
+      "status": "SCHEDULED",
+      "score_h": "-",
+      "score_a": "-",
+      "date_kst": "6/16 04:00",
+      "date_iso": "2026-06-16T04:00:00+09:00",
+      "is_korea": true,
+      "matchday": 1
+    },
+    {
+      "home": "Korea Republic",
+      "away": "Mexico",
+      "home_flag": "🇰🇷",
+      "away_flag": "🇲🇽",
+      "status": "SCHEDULED",
+      "score_h": "-",
+      "score_a": "-",
+      "date_kst": "6/21 04:00",
+      "date_iso": "2026-06-21T04:00:00+09:00",
+      "is_korea": true,
+      "matchday": 2
+    },
+    {
+      "home": "Germany",
+      "away": "Korea Republic",
+      "home_flag": "🇩🇪",
+      "away_flag": "🇰🇷",
+      "status": "SCHEDULED",
+      "score_h": "-",
+      "score_a": "-",
+      "date_kst": "6/25 07:00",
+      "date_iso": "2026-06-25T07:00:00+09:00",
+      "is_korea": true,
+      "matchday": 3
+    }
+  ],
+  "standings": [
+    {
+      "position": 1,
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "played": 0,
+      "won": 0,
+      "draw": 0,
+      "lost": 0,
+      "gd": 0,
+      "points": 0,
+      "is_korea": false
+    },
+    {
+      "position": 2,
+      "name": "Korea Republic",
+      "flag": "🇰🇷",
+      "played": 0,
+      "won": 0,
+      "draw": 0,
+      "lost": 0,
+      "gd": 0,
+      "points": 0,
+      "is_korea": true
+    },
+    {
+      "position": 3,
+      "name": "Mexico",
+      "flag": "🇲🇽",
+      "played": 0,
+      "won": 0,
+      "draw": 0,
+      "lost": 0,
+      "gd": 0,
+      "points": 0,
+      "is_korea": false
+    },
+    {
+      "position": 4,
+      "name": "Costa Rica",
+      "flag": "🇨🇷",
+      "played": 0,
+      "won": 0,
+      "draw": 0,
+      "lost": 0,
+      "gd": 0,
+      "points": 0,
+      "is_korea": false
+    }
+  ],
+  "next_match": {
+    "home": "Korea Republic",
+    "away": "Costa Rica",
+    "home_flag": "🇰🇷",
+    "away_flag": "🇨🇷",
+    "status": "SCHEDULED",
+    "score_h": "-",
+    "score_a": "-",
+    "date_kst": "6/16 04:00",
+    "date_iso": "2026-06-16T04:00:00+09:00",
+    "is_korea": true,
+    "matchday": 1
+  },
   "last_match": null,
-  "updated_at": "2026-06-05 10:50 KST"
+  "updated_at": "2026-06-05 10:57 KST"
 }
