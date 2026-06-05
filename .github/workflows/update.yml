@@ -21,9 +21,11 @@ jobs:
       - name: 패키지 설치
         run: pip install requests jinja2
 
-      - name: 데이터 수집 및 HTML 생성
+      - name: 데이터 수집 및 HTML 생성 + 워드프레스 업데이트
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
         run: python fetch_and_build.py
 
       - name: 변경사항 커밋 & 푸시
