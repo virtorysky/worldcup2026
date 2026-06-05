@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>2026 월드컵 한국 경기 올인원 | 일정·결과·중계</title>
 <meta name="description" content="2026 북중미 월드컵 한국 경기 일정, 실시간 결과, 중계 링크를 한 곳에서 확인하세요.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6673668298295600"
+     crossorigin="anonymous"></script>
 <style>
   :root {
     --red: #c0392b; --red-dark: #96281b; --red-light: #fadbd8;
@@ -34,7 +37,7 @@
   .tab-btn.active { color: #fff; border-bottom-color: var(--gold); }
   .tab-section { display: none; padding: 16px; }
   .tab-section.active { display: block; }
-  .ad-slot { background: var(--white); border: 1px dashed var(--border); border-radius: 10px; height: 90px; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 11px; margin-bottom: 16px; overflow: hidden; }
+  .ad-slot { background: var(--white); border-radius: 10px; margin-bottom: 16px; overflow: hidden; min-height: 90px; }
   .next-hero { background: var(--navy); border-radius: 14px; padding: 20px 16px; margin-bottom: 16px; position: relative; overflow: hidden; }
   .next-hero::before { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(192,57,43,0.15); border-radius: 50%; }
   .next-label { font-size: 10px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
@@ -141,7 +144,15 @@
 <!-- ══════════ HOME ══════════ -->
 <section id="tab-home" class="tab-section active">
   <div class="updated-info">🔄 마지막 업데이트: {{ updated_at }}</div>
-  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="ad-slot">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 
   <div class="bookmark-banner">
     <div style="font-size:30px;flex-shrink:0;">🔖</div>
@@ -152,7 +163,6 @@
     <button class="bk-btn" onclick="alert('주소창의 ☆ 버튼을 눌러 즐겨찾기 추가하세요!')">저장</button>
   </div>
 
-  <!-- 다음 한국 경기 -->
   {% if next_match %}
   <div class="next-hero">
     <div class="next-label">🇰🇷 다음 한국 경기</div>
@@ -174,7 +184,6 @@
     <a href="https://sports.naver.com" class="btn-watch" target="_blank">📺 실시간 중계 바로보기</a>
     <a href="https://sports.naver.com" class="btn-watch-sub" target="_blank">📱 네이버 스포츠 중계 링크</a>
   </div>
-  <!-- 카운트다운 -->
   <div class="countdown-wrap">
     <div class="countdown-title">🇰🇷 다음 경기 시작까지</div>
     <div class="countdown-boxes">
@@ -186,7 +195,6 @@
   </div>
   {% endif %}
 
-  <!-- 직전 경기 결과 -->
   {% if last_match %}
   <div class="section-title">최근 경기 결과</div>
   <div class="match-card korea finished">
@@ -209,7 +217,15 @@
   </div>
   {% endif %}
 
-  <div class="ad-slot" style="height:280px;"><!-- 애드센스 300x250 --></div>
+  <div class="ad-slot" style="min-height:280px;">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 
   <div class="section-title">빠른 바로가기</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
@@ -222,7 +238,15 @@
 
 <!-- ══════════ SCHEDULE ══════════ -->
 <section id="tab-schedule" class="tab-section">
-  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="ad-slot">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
   <div class="section-title">🇰🇷 한국 전체 일정</div>
 
   {% for m in matches %}
@@ -271,12 +295,28 @@
   {% endif %}
   {% endfor %}
 
-  <div class="ad-slot" style="height:280px;margin-top:16px;"><!-- 애드센스 300x250 --></div>
+  <div class="ad-slot" style="min-height:280px;margin-top:16px;">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 </section>
 
 <!-- ══════════ GROUP ══════════ -->
 <section id="tab-group" class="tab-section">
-  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="ad-slot">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
   <div class="group-card">
     <div class="group-head">
       <div class="group-letter">E</div>
@@ -310,12 +350,28 @@
       <span><span class="elim-dot"></span>탈락권</span>
     </div>
   </div>
-  <div class="ad-slot" style="height:280px;"><!-- 애드센스 300x250 --></div>
+  <div class="ad-slot" style="min-height:280px;">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 </section>
 
 <!-- ══════════ WATCH ══════════ -->
 <section id="tab-watch" class="tab-section">
-  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="ad-slot">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
   <div class="section-title">무료 중계 보기</div>
   <div class="broadcast-card">
     <div class="bc-head">
@@ -357,12 +413,28 @@
       <a href="https://sports.kbs.co.kr" class="btn-bc navy" target="_blank">📡 KBS 스포츠 중계</a>
     </div>
   </div>
-  <div class="ad-slot" style="height:280px;margin-top:16px;"><!-- 애드센스 300x250 --></div>
+  <div class="ad-slot" style="min-height:280px;margin-top:16px;">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 </section>
 
 <!-- ══════════ PLAYERS ══════════ -->
 <section id="tab-players" class="tab-section">
-  <div class="ad-slot"><!-- 애드센스 320x100 --></div>
+  <div class="ad-slot">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
   <div class="section-title">🇰🇷 국가대표 주요 선수</div>
   <div class="player-grid">
     <div class="player-card top1"><div class="rank">⭐ NO.1</div><div class="flag">🇰🇷</div><div class="pname">손흥민</div><div class="pvalue">몸값 <b>€45M</b></div></div>
@@ -384,7 +456,15 @@
     </div>
   </div>
   <a href="https://sports.naver.com" class="btn-watch" target="_blank">📋 전체 26인 명단 보기</a>
-  <div class="ad-slot" style="height:280px;margin-top:16px;"><!-- 애드센스 300x250 --></div>
+  <div class="ad-slot" style="min-height:280px;margin-top:16px;">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%"
+         data-ad-client="ca-pub-6673668298295600"
+         data-ad-slot="6644186273"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 </section>
 
 <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -403,12 +483,8 @@ function showTab(id, el) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// 카운트다운 (next_match 날짜 기준)
 {% if next_match %}
-var targetDateStr = "{{ next_match.date_kst }}";
-// fetch_and_build.py에서 ISO 형식으로도 저장하도록 확장 가능
-// 여기서는 정적으로 다음 경기 UTC 시각 사용
-var nextMatchTime = new Date("2026-06-21T04:00:00+09:00");
+var nextMatchTime = new Date("{{ next_match.date_iso }}");
 function updateCountdown() {
   var diff = nextMatchTime - new Date();
   if (diff <= 0) {
